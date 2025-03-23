@@ -1,19 +1,21 @@
 package server;
-import java.util.List;
+import java.util.ArrayList;
 
 import Messages.Message;
 import Messages.ServerMessage;
 public class Channel {
-	private List<User> joinedUsers;
-	private List<Message> messages;
+	private ArrayList<User> joinedUsers;
+	private ArrayList<Message> messages;
 	private String name;
 	public Channel(String name) {
 		this.name = name;
+		this.joinedUsers = new ArrayList<User>();
+		this.messages = new ArrayList<Message>();
 	}
 	public void recieveConnection(User user) {
 		joinedUsers.add(user);
 		
-		sendMessage(new ServerMessage("Hello, welcome to channel: " + name + ". Enjoy!"));
+		sendMessage(new ServerMessage(user.getName()+" welcome to channel " + name + "!"));
 	}
 	public void cutConnection(User user) {
 		joinedUsers.remove(user);
@@ -24,7 +26,7 @@ public class Channel {
 			user.notify(message);
 		});
 	}
-	public List<Message> getMessages() {
+	public ArrayList<Message> getMessages() {
 		return this.messages;
 	}
 }
